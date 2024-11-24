@@ -1,8 +1,5 @@
-The image shows a group of people sitting at tables in a room, with various objects scattered around them. 
-
-Here are the objects you requested information about:
-
-* Person 79: 3.02m away from you to your right
-* Chair: 1.40m away from you to your left
-* Person 85: 5.66m away from you to your left
-* Projector: 0.80m away from you directly in front of you
+Laptop screen: 0.31m, right
+Laptop keyboard: 0.31m, right
+Chairs: 0.78m, right
+Laptop body: 0.31m, right
+Table (partially visible): 0.52m, front
