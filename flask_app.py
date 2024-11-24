@@ -6,7 +6,6 @@ app = Flask(__name__)
 @app.route('/button', methods=['GET'])
 def button_pressed():
     print("Button press detected from ESP32!")
-    # Trigger functionality
     print("Running functionality triggered by button press...")
 
     
