@@ -7,8 +7,8 @@ import os
 # Camera and Model Configuration
 url = 'http://192.168.155.123/cam-hi.jpg'
 whT = 320
-confThreshold = 0.5
-nmsThreshold = 0.3
+confThreshold = 0.75
+nmsThreshold = 0.15
 sharpness_threshold = 100  # Threshold for sharpness filtering
 classesfile = 'coco.names'
 classNames = []
@@ -38,7 +38,7 @@ net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
 save_interval = 0.1 
 duration = 5  
 frame_count = 0
-output_folder = 'saved_frames'
+output_folder = './saved_frames'
 
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
@@ -137,7 +137,7 @@ while True:
     if (current_time - last_saved_time >= save_interval):
         frame_count += 1
         frame_path = os.path.join(output_folder, f'frame_{frame_count}.jpg')
-        cv2.imwrite(frame_path, im)
+        # cv2.imwrite(frame_path, im)
         print(f"Saved sharp frame: {frame_path}")
         last_saved_time = current_time
     
@@ -150,8 +150,9 @@ while True:
         break
 
 if sharpest_frame is not None:
-    sharpest_frame_path = os.path.join(output_folder, 'sharpest_frame.jpg')
+    sharpest_frame_path = os.path.join(output_folder, f'sharpest_frame.png')
     cv2.imwrite(sharpest_frame_path, sharpest_frame)
+    os.system(f'scp ./{output_folder}/sharpest_frame.png ubuntu@195.242.13.247:/home/ubuntu/meta_llama_hacks/inputs')   
     print(f"Sharpest frame saved at: {sharpest_frame_path}")
 else:
     print("No frames were sharp enough to save.")
