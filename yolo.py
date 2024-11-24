@@ -34,9 +34,9 @@ net = cv2.dnn.readNetFromDarknet(modelConfig, modelWeights)
 net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
 net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
 
-# Frame-saving settings
-save_interval = 0.1  # Interval in seconds
-duration = 5  # Save frames for 5 seconds
+
+save_interval = 0.1 
+duration = 5  
 frame_count = 0
 output_folder = 'saved_frames'
 
@@ -74,7 +74,7 @@ def findObject(outputs, im):
             object_name = classNames[classIds[i]]
 
             if h > 0:
-                if object_name in real_heights:  # Check if height is defined
+                if object_name in real_heights:  
                     H_real = real_heights[object_name]
                     distance = (H_real * f_pixels) / h
                     distance_text = f"{distance:.2f}m"
@@ -86,7 +86,6 @@ def findObject(outputs, im):
                 distance_text = "Invalid"
                 print(f"Invalid bounding box height for {object_name}")
 
-            # Draw bounding box and label
             cv2.rectangle(im, (x, y), (x + w, y + h), (255, 0, 255), 2)
             cv2.putText(
                 im,
@@ -99,13 +98,11 @@ def findObject(outputs, im):
             )
 
 
-# Sharpness detection function
 def is_sharp(frame):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
     return laplacian_var > sharpness_threshold, laplacian_var
 
-# Start capturing frames
 start_time = time.time()
 last_saved_time = start_time
 
@@ -131,7 +128,6 @@ while True:
     sharp, sharpness_value = is_sharp(im)
     print(f"Sharpness: {sharpness_value:.2f}")
 
-    # Update sharpest frame if necessary
     if sharpness_value > max_sharpness:
         max_sharpness = sharpness_value
         sharpest_frame = im.copy()
@@ -145,12 +141,10 @@ while True:
         print(f"Saved sharp frame: {frame_path}")
         last_saved_time = current_time
     
-    # Stop after the specified duration
     if time.time() - start_time >= duration:
         print("Frame capturing complete.")
         break
 
-    # Show the frame (optional)
     cv2.imshow('Image', im)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
